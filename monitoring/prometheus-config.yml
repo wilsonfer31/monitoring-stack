@@ -1,0 +1,27 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+
+  # Métriques RAM / CPU / réseau par container Docker
+  - job_name: cadvisor
+    static_configs:
+      - targets: ["cadvisor:8080"]
+
+  # Métriques de la machine hôte (RAM, disque, CPU)
+  - job_name: node
+    static_configs:
+      - targets: ["node-exporter:9100"]
+
+  # --- Ajouter ici les endpoints /metrics de tes apps ---
+  # Exemple Spring Boot Actuator :
+  # - job_name: backend
+  #   metrics_path: /api/actuator/prometheus
+  #   static_configs:
+  #     - targets: ["backend:8080"]
+  #
+  # Exemple Node.js (prom-client) :
+  # - job_name: api
+  #   static_configs:
+  #     - targets: ["api:3000"]
